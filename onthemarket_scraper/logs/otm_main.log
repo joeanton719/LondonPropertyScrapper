@@ -1,0 +1,17 @@
+2023-05-04 19:15:35,324 - otm_main_log - INFO - Started Scraping from OnTheMarket
+2023-05-04 19:33:48,771 - otm_main_log - INFO - Started Scraping from OnTheMarket
+2023-05-04 19:44:25,914 - otm_main_log - INFO - Started Scraping from OnTheMarket
+2023-05-04 19:54:20,629 - otm_main_log - INFO - Started Scraping from OnTheMarket
+2023-05-04 20:40:06,975 - otm_main_log - INFO - Started Scraping from OnTheMarket
+2023-05-04 20:49:56,290 - otm_main_log - INFO - Started Scraping from OnTheMarket
+2023-05-04 20:55:19,776 - otm_main_log - INFO - Started Scraping from OnTheMarket
+2023-05-04 21:04:35,725 - otm_main_log - INFO - Started Scraping from OnTheMarket
+2023-05-04 22:10:13,058 - otm_main_log - INFO - Started Scraping from OnTheMarket
+2023-05-04 22:12:43,040 - otm_main_log - INFO - Started Scraping from OnTheMarket
+2023-05-04 22:12:55,247 - otm_main_log - INFO - Scraped total 1685 links
+2023-05-04 22:13:27,360 - otm_main_log - INFO - Total rows: 1685
+2023-05-04 22:13:27,364 - otm_main_log - INFO - scrape_from_otm took 44.33 seconds to run.
+2023-05-04 22:24:12,878 - otm_main_log - INFO - Started Scraping from OnTheMarket
+2023-05-04 22:24:24,575 - otm_main_log - INFO - Scraped total 1685 links
+2023-05-04 22:24:51,022 - otm_main_log - INFO - Total rows: 1685
+2023-05-04 22:24:51,027 - otm_main_log - INFO - scrape_from_otm took 38.15 seconds to run.
