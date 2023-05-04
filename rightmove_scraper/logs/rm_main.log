@@ -17,3 +17,5 @@
 2023-05-04 23:25:10,545 - rm_main_log - INFO - Started Scraping from RightMove
 2023-05-04 23:36:48,931 - rm_main_log - INFO - Started Scraping from RightMove
 2023-05-04 23:54:13,415 - rm_main_log - INFO - Started Scraping from RightMove
+2023-05-05 00:04:53,961 - rm_main_log - INFO - Scraped 2786 properties from RightMove.com
+2023-05-05 00:04:53,963 - rm_main_log - INFO - scrape_from_rightmove took 10.68 minutes to run.
