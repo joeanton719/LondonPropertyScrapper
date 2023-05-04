@@ -1,1 +1,8 @@
+# Ignore all log files
 *.log
+
+# Ignore pycache folder
+__pycache__/
+
+# Ignore all files with a .pyc extension
+*.pyc

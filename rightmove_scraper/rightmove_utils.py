@@ -1,5 +1,7 @@
+import os
+import sys
+
 import pandas as pd
-import sys, os
 
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)

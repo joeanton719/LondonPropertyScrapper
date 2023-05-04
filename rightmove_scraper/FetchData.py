@@ -21,6 +21,7 @@ from utils.add_utils import Logger, fetch
 logger = Logger('rm_fetchData_log', 'rm_fetchData.log', currentdir).get_logger()
 
 
+
 async def fetch_all_property_data(outcode_list: list[str]) -> list[dict[str, Union[int, float, str, bool, None]]]:
     """
     Fetches property data for a list of outcodes using async requests.
@@ -49,6 +50,7 @@ async def fetch_all_property_data(outcode_list: list[str]) -> list[dict[str, Uni
         property_data = [data for data_list in property_data_list if len(data_list)!=0 for data in data_list]
         
         return property_data
+
 
 
 async def get_property_data(
@@ -106,9 +108,11 @@ async def get_property_data(
 
         except asyncio.exceptions.TimeoutError:
             logger.error("TimeoutError", search_url)
+            break
 
         except tenacity.RetryError:
             logger.error("RetryError", search_url)
+            break
 
     # return list of extracted property data
     return property_list
