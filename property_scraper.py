@@ -45,8 +45,5 @@ async def main():
 
 if __name__=="__main__":
     df = asyncio.run(main())
-    print(len(df))
-    print()
-    print(df.info())
-    print()
-    print(df.head())
+    df.to_csv("londonproperties.csv", index=False)
+    print("Done!!!!!!")
