@@ -31,7 +31,7 @@ async def fetch_all_property_data(outcode_list: list[str]) -> list[dict[str, Uni
     Returns:
         A list of dictionaries representing property data.
     """
-    NUM_REQ=45
+    NUM_REQ=40
 
     async with ClientSession(
         timeout=ClientTimeout(total=60), 
@@ -91,9 +91,9 @@ async def get_property_data(
             # params = {"locationIdentifier" : outcode, "index" : str(page_num), "maxDaysSinceAdded" : "1"}
 
             search_url=f"https://www.rightmove.co.uk/{search_type}/find.html?"\
-                       f"locationIdentifier={outcode.replace('^', '%5E')}&"\
-                       f"index={page_num}&maxDaysSinceAdded=1"
-            
+                       f"locationIdentifier={outcode.replace('^', '%5E')}&index={page_num}&"\
+                        "propertyTypes=&maxDaysSinceAdded=1&mustHave=&dontShow=&furnishTypes=&keywords="
+
             try:
                 # fetch search results with async HTTP GET request
                 resp = await fetch(headers=get_headers(), session=session, url=search_url)
@@ -109,10 +109,6 @@ async def get_property_data(
                     
                     # increment page number by 24 for next search results page
                     page_num+=IDX
-
-            except asyncio.exceptions.TimeoutError:
-                logger.error(f"TimeoutError - {search_url}")
-                break
 
             except tenacity.RetryError:
                 logger.error(f"RetryError - {search_url}")

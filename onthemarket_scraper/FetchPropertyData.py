@@ -33,7 +33,7 @@ async def fetch_all_property_data(property_urls: list[str]) -> list[dict[str, Un
     Returns:
     - (list[dict]): A list of dictionaries containing property data for each URL in the input list.
     """    
-    NUM_REQ=30
+    NUM_REQ=50
     async with ClientSession(
         timeout=ClientTimeout(total=60), 
         connector=TCPConnector(limit=NUM_REQ)

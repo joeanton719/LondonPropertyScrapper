@@ -58,10 +58,11 @@ class Logger:
         return self.logger
     
 
+
 # https://tenacity.readthedocs.io/en/latest/
 @tenacity.retry(
         retry=retry_if_exception_type(asyncio.exceptions.TimeoutError),
-        wait=wait_fixed(4) + wait_random(0, 5), 
+        wait=wait_fixed(5), 
         stop=stop_after_attempt(5)
         )
 async def fetch(session: ClientSession, url: str, headers: dict, params=None) -> str: 

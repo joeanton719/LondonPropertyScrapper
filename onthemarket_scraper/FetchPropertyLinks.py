@@ -32,7 +32,7 @@ async def fetch_all_property_urls(zipcode_list: list[str]) -> list[str]:
     Returns:
         List[str]: A list of unique property URLs.
     """
-    NUM_REQ=30
+    NUM_REQ=50
     async with ClientSession(
         timeout=ClientTimeout(total=60), 
         connector=TCPConnector(limit=NUM_REQ)
