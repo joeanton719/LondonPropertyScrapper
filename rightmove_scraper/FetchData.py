@@ -31,11 +31,11 @@ async def fetch_all_property_data(outcode_list: list[str]) -> list[dict[str, Uni
     Returns:
         A list of dictionaries representing property data.
     """
-    NUM_REQ=40
+    NUM_REQ=25
 
     async with ClientSession(
-        timeout=ClientTimeout(total=60), 
-        connector=TCPConnector(limit=NUM_REQ, keepalive_timeout=30)
+        timeout=ClientTimeout(total=None), 
+        connector=TCPConnector(limit=NUM_REQ)
     ) as session:
         
         # create a semaphore to limit the number of concurrent requests
@@ -79,17 +79,10 @@ async def get_property_data(
         # set initial last_page value to a large number (42 pages * 24 results per page)
         last_page=42*IDX
 
-        # search_url=f"https://www.rightmove.co.uk/{search_type}/find.html?"\
-        #            f"locationIdentifier={outcode.replace('^', '%5E')}&index={page_num}&maxDaysSinceAdded=1"
-
-        
-            # loop through pages of search results (24 results per page)
+        # loop through pages of search results (24 results per page)
         while page_num<=last_page:
 
             # build search URL with specified query parameters
-            # url=f"https://www.rightmove.co.uk/{search_type}/find.html?"
-            # params = {"locationIdentifier" : outcode, "index" : str(page_num), "maxDaysSinceAdded" : "1"}
-
             search_url=f"https://www.rightmove.co.uk/{search_type}/find.html?"\
                        f"locationIdentifier={outcode.replace('^', '%5E')}&index={page_num}&"\
                         "propertyTypes=&maxDaysSinceAdded=1&mustHave=&dontShow=&furnishTypes=&keywords="

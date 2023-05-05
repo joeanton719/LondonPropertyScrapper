@@ -34,10 +34,11 @@ async def main():
     executor = concurrent.futures.ThreadPoolExecutor()
     # run the normal function in a separate thread
     df1 = loop.run_in_executor(executor, scrape_from_zoopla)
+
     # run the async function in the event loop
     df2 = await async_scrape()
-    
-    df = pd.concat([df1, df2], ignore_index=True)
+
+    df = pd.concat([await df1, df2], ignore_index=True)
 
     return df
 
