@@ -2,7 +2,7 @@
 *.log
 
 # Ignore pycache folder
-__pycache__/
+*/*__pycache__/
 
 # Ignore all files with a .pyc extension
 *.pyc

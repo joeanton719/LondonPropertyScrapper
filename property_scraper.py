@@ -19,7 +19,9 @@ async def async_scrape():
     all_tasks = await asyncio.gather(otm_task, rm_task)
     properties = [prop_dict for lists in all_tasks for prop_dict in lists]
 
-    return properties
+    df = pd.DataFrame(properties)
+
+    return df
 
 
 @time_it(logger)
@@ -31,20 +33,19 @@ async def main():
     # create an executor
     executor = concurrent.futures.ThreadPoolExecutor()
     # run the normal function in a separate thread
-    list1 = loop.run_in_executor(executor, scrape_from_zoopla)
+    df1 = loop.run_in_executor(executor, scrape_from_zoopla)
     # run the async function in the event loop
-    list2 = await async_scrape()
-    properties = list1 + list2
-
-    df = pd.DataFrame(properties)
+    df2 = await async_scrape()
+    
+    df = pd.concat([df1, df2], ignore_index=True)
 
     return df
 
 
 if __name__=="__main__":
-    df = asyncio.run(scrape_from_rightmove())
+    df = asyncio.run(main())
     print(len(df))
     print()
-    # print(df.info())
-    # print()
-    # print(df.head())
+    print(df.info())
+    print()
+    print(df.head())

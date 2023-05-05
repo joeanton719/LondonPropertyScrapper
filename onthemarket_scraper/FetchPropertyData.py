@@ -19,7 +19,6 @@ from aiohttp import ClientSession, ClientTimeout, TCPConnector
 from onthemarket_scraper.onthemarket_utils import get_headers
 from utils.add_utils import Logger, fetch
 
-
 logger = Logger('otm_fetchdata_log', 'otm_fetchdata.log', currentdir).get_logger()
 
 
@@ -67,8 +66,11 @@ async def get_property_data(session: ClientSession, property_url: str) -> dict[s
         property_data_dict = parse_property_data(resp=resp)
         return property_data_dict
     
-    except tenacity.RetryError as e:
-        logger.error("RetryError", property_url)
+    except asyncio.exceptions.TimeoutError:
+        logger.error(f"TimeoutError - {property_url}")
+
+    except tenacity.RetryError:
+        logger.error(f"RetryError - {property_url}") 
 
 
 

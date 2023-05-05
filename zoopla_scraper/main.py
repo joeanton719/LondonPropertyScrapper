@@ -1,6 +1,8 @@
 import concurrent.futures
 import os
 
+import pandas as pd
+
 from utils.add_utils import Logger, time_it
 from zoopla_scraper.FetchData import get_data
 
@@ -24,4 +26,6 @@ def scrape_from_zoopla() -> list[dict]:
     
     full_list = sales_property_list + rent_property_list
 
-    return full_list
+    df = pd.DataFrame(full_list)
+
+    return df

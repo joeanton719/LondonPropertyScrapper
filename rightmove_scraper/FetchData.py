@@ -31,7 +31,7 @@ async def fetch_all_property_data(outcode_list: list[str]) -> list[dict[str, Uni
     Returns:
         A list of dictionaries representing property data.
     """
-    NUM_REQ=30
+    NUM_REQ=45
 
     async with ClientSession(
         timeout=ClientTimeout(total=60), 
@@ -79,19 +79,24 @@ async def get_property_data(
         # set initial last_page value to a large number (42 pages * 24 results per page)
         last_page=42*IDX
 
-        search_url=f"https://www.rightmove.co.uk/{search_type}/find.html?"\
-                   f"locationIdentifier={outcode.replace('^', '%5E')}&index={page_num}&maxDaysSinceAdded=1"
+        # search_url=f"https://www.rightmove.co.uk/{search_type}/find.html?"\
+        #            f"locationIdentifier={outcode.replace('^', '%5E')}&index={page_num}&maxDaysSinceAdded=1"
 
-        try:
+        
             # loop through pages of search results (24 results per page)
-            while page_num<=last_page:
+        while page_num<=last_page:
 
-                # build search URL with specified query parameters
-                url=f"https://www.rightmove.co.uk/{search_type}/find.html?"
-                params = {"locationIdentifier" : outcode, "index" : str(page_num), "maxDaysSinceAdded" : "1"}
+            # build search URL with specified query parameters
+            # url=f"https://www.rightmove.co.uk/{search_type}/find.html?"
+            # params = {"locationIdentifier" : outcode, "index" : str(page_num), "maxDaysSinceAdded" : "1"}
 
+            search_url=f"https://www.rightmove.co.uk/{search_type}/find.html?"\
+                       f"locationIdentifier={outcode.replace('^', '%5E')}&"\
+                       f"index={page_num}&maxDaysSinceAdded=1"
+            
+            try:
                 # fetch search results with async HTTP GET request
-                resp = await fetch(headers=get_headers(), session=session, url=url, params=params)
+                resp = await fetch(headers=get_headers(), session=session, url=search_url)
                 
                 # get maximum page number from first search results page
                 if page_num==0: last_page = get_max_page(resp=resp)
@@ -101,14 +106,17 @@ async def get_property_data(
                 else:
                     # extract property data from search results page and append to list
                     property_list.extend(parse_data(resp=resp))
+                    
                     # increment page number by 24 for next search results page
                     page_num+=IDX
 
-        except asyncio.exceptions.TimeoutError:
-            logger.error("TimeoutError", search_url)
+            except asyncio.exceptions.TimeoutError:
+                logger.error(f"TimeoutError - {search_url}")
+                break
 
-        except tenacity.RetryError:
-            logger.error("RetryError", search_url)
+            except tenacity.RetryError:
+                logger.error(f"RetryError - {search_url}")
+                break
 
     # return list of extracted property data
     return property_list

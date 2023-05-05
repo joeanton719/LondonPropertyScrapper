@@ -15,8 +15,7 @@ import numpy as np
 from aiohttp import ClientSession, ClientTimeout, TCPConnector
 
 from onthemarket_scraper.onthemarket_utils import get_headers
-from utils.add_utils import fetch, Logger
-
+from utils.add_utils import Logger, fetch
 
 logger = Logger('otm_fetchlinks_log', 'otm_fetchlinks.log', currentdir).get_logger()
 
@@ -85,15 +84,18 @@ async def get_zc_property_urls(session: ClientSession, zipcode: str) -> list[Uni
                             try: property_urls.append("https://www.onthemarket.com" + row["property-link"])
                             
                             except KeyError as e: 
-                                logger.error(type(e).__name__, search_url)
+                                logger.error(f"KeyError - No property-link key - {search_url}")
                                 pass
 
                     page_num+=1
 
-                all_urls.extend(property_urls)
+            except asyncio.exceptions.TimeoutError:
+                logger.error(f"TimeoutError - {search_url}")
 
-            except tenacity.RetryError as e:
-                logger.error("RetryError", search_url)
+            except tenacity.RetryError:
+                logger.error(f"RetryError - {search_url}") 
+
+            all_urls.extend(property_urls)
 
             break
 
