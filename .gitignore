@@ -6,3 +6,6 @@
 
 # Ignore all files with a .pyc extension
 *.pyc
+
+# CSV files
+*.csv
