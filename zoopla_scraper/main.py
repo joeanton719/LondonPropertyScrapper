@@ -27,5 +27,6 @@ def scrape_from_zoopla() -> list[dict]:
     full_list = sales_property_list + rent_property_list
 
     df = pd.DataFrame(full_list)
+    logger.info(f"Scraped Total {len(df)} properties")
 
     return df

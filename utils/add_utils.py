@@ -95,7 +95,7 @@ def time_it(logger: logging.Logger):
             elapsed_time = time.time() - start_time
             
             if elapsed_time < 60: logger.info(f"{func.__name__} took {elapsed_time:.2f} seconds to run.")
-            else: logger.info(f"{func.__name__} took {elapsed_time/60:.2f} minutes to run.")
+            else: logger.info(f"{func.__name__} took {elapsed_time/60:.2f} minutes to run.\n")
             
             return result
 
@@ -106,7 +106,7 @@ def time_it(logger: logging.Logger):
             elapsed_time = time.time() - start_time
             
             if elapsed_time < 60: logger.info(f"{func.__name__} took {elapsed_time:.2f} seconds to run.")
-            else: logger.info(f"{func.__name__} took {elapsed_time/60:.2f} minutes to run.")
+            else: logger.info(f"{func.__name__} took {elapsed_time/60:.2f} minutes to run.\n")
             
             return result
 

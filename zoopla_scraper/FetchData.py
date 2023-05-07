@@ -60,7 +60,7 @@ def get_data(for_sale: bool=True) -> list[dict[str, Union[str, int, float, datet
         
         # If no more properties were found, log the completion message and return the full list
         else:
-            log_dict[task].info("Completed")
+            log_dict[task].info("Completed\n")
             driver.quit()
             return full_list
 

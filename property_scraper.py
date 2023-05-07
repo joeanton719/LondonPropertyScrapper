@@ -45,5 +45,5 @@ async def main():
 
 if __name__=="__main__":
     df = asyncio.run(main())
-    df.to_csv("londonproperties.csv", index=False)
+    # df.to_csv("londonproperties.csv", index=False)
     print("Done!!!!!!")
