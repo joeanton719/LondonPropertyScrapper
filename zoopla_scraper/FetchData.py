@@ -49,20 +49,29 @@ def get_data(for_sale: bool=True) -> list[dict[str, Union[str, int, float, datet
         if page_num==1: show_results(driver=driver, task=task)
         
         # Extract the list of properties from the current page of search results and close the driver
-        property_lists = get_lists(driver=driver)
-        driver.close()
-        
-        # If properties were found, parse the data and add it to the full list
-        if len(property_lists)!=0:
-            full_list.extend(parse_data(property_lists=property_lists, for_sale=for_sale))
-            log_dict[task].info(f"Scraped {task} Page #{page_num}")
-            page_num+=1
-        
-        # If no more properties were found, log the completion message and return the full list
-        else:
-            log_dict[task].info("Completed\n")
+        try:
+            property_lists = get_lists(driver=driver)
+            driver.close()
+
+            # If properties were found, parse the data and add it to the full list
+            if len(property_lists)!=0:
+                full_list.extend(parse_data(property_lists=property_lists, for_sale=for_sale))
+                log_dict[task].info(f"Scraped {task} Page #{page_num}")
+                page_num+=1
+            
+            # If no more properties were found, log the completion message and return the full list
+            else:
+                log_dict[task].info("Completed\n")
+                driver.quit()
+                return full_list
+
+        except KeyError:
+            log_dict[task].error(f"KeyError: {url}")
+            log_dict[task].info("Completed with no results\n")
             driver.quit()
             return full_list
+        
+
 
 
 def show_results(driver: webdriver.Chrome, task: str) -> None:
