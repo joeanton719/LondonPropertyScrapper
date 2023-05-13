@@ -73,6 +73,7 @@ def get_data(for_sale: bool=True) -> list[dict[str, Union[str, int, float, datet
         
         except Exception as e:
             log_dict[task].error(f"{type(e).__name__}: {e} - {url}")
+            print(f"{type(e).__name__}: {e} - {url}")
             driver.quit()
         
 
