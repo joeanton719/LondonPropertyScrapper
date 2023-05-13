@@ -188,7 +188,7 @@ def parse_price(row: str, for_sale: bool) -> dict[str, Union[str, float]]:
     try:
         price=float(re.sub(r"[^\d\.]", "", row))
         price_currency=row[0]
-        rent_freq=np.nan if for_sale else row['price'].split()[-1]
+        rent_freq=np.nan if for_sale else row.split()[-1]
 
     except ValueError:
         price=np.nan
