@@ -107,6 +107,11 @@ async def get_property_data(
                 logger.error(f"RetryError - {search_url}")
                 break
 
+            except Exception as e:
+                logger.error(f"{type(e).__name__}: {e} - {search_url}\n")
+                return
+
+
     # return list of extracted property data
     return property_list
 

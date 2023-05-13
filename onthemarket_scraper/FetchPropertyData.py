@@ -70,7 +70,10 @@ async def get_property_data(session: ClientSession, property_url: str) -> dict[s
         logger.error(f"TimeoutError - {property_url}")
 
     except tenacity.RetryError:
-        logger.error(f"RetryError - {property_url}") 
+        logger.error(f"RetryError - {property_url}")
+
+    except Exception as e:
+        logger.error(f"{type(e).__name__}: {e} - {property_url}\n")
 
 
 
