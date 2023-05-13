@@ -71,6 +71,10 @@ def get_data(for_sale: bool=True) -> list[dict[str, Union[str, int, float, datet
             driver.quit()
             return full_list
         
+        except Exception as e:
+            log_dict[task].error(f"{type(e).__name__}: {e} - {url}")
+            driver.quit()
+        
 
 
 
@@ -135,9 +139,9 @@ def parse_data(
             "description" : row['summaryDescription'],
             "propertySubType" : row['propertyType'],
             "featuredProperty" : row['featuredType'] is not None,
-            "price" : float(re.sub(r"[^\d\.]", "", row['price'])),
-            "price_currency" : row['price'][0],
-            "rent_freq" : np.nan if for_sale else row['price'].split()[-1],
+            "price" : parse_price(row=row['price'], for_sale=for_sale)["price"],
+            "price_currency" : parse_price(row=row['price'], for_sale=for_sale)["price_currency"],
+            "rent_freq" : parse_price(row=row['price'], for_sale=for_sale)["rent_freq"],
             "displayAddress" : row['address'],
             "latitude" : row['location']['coordinates']['latitude'],
             "longitude" : row['location']['coordinates']['longitude'],
@@ -176,3 +180,18 @@ def total_bad_and_bath(dict_key: dict) -> dict[str, Union[int, float]]:
     
     except IndexError:
         return {"bed": np.nan, "bath": np.nan}
+    
+
+def parse_price(row: str, for_sale: bool) -> dict[str, Union[str, float]]:
+    
+    try:
+        price=float(re.sub(r"[^\d\.]", "", row))
+        price_currency=row[0]
+        rent_freq=np.nan if for_sale else row['price'].split()[-1]
+
+    except ValueError:
+        price=np.nan
+        price_currency=np.nan
+        rent_freq=np.nan
+
+    return {"price":price, "price_currency":price_currency, "rent_freq":rent_freq}
