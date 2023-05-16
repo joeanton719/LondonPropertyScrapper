@@ -4,7 +4,7 @@ import os
 import time
 from functools import wraps
 from logging.handlers import RotatingFileHandler
-from aiohttp.client_exceptions import ServerDisconnectedError
+from aiohttp.client_exceptions import ServerDisconnectedError, ClientOSError
 
 import tenacity
 from aiohttp import ClientSession
@@ -61,7 +61,7 @@ class Logger:
 
 # https://tenacity.readthedocs.io/en/latest/
 @tenacity.retry(
-        retry=retry_if_exception_type((asyncio.exceptions.TimeoutError, ServerDisconnectedError)),
+        retry=retry_if_exception_type((asyncio.exceptions.TimeoutError, ServerDisconnectedError, ClientOSError)),
         wait=wait_fixed(5), 
         stop=stop_after_attempt(5)
         )
