@@ -204,7 +204,7 @@ def parse_description(json_data: dict[str, Any]) -> str:
 
 
 
-def parse_price(json_data: dict[str, Any]) -> dict[str, Union[float, str, None]]:
+def parse_price(json_data: dict[str, Any]) -> dict[str, Union[float, str]]:
     """
     Parses price data from a JSON dictionary.
 
@@ -217,10 +217,18 @@ def parse_price(json_data: dict[str, Any]) -> dict[str, Union[float, str, None]]
     text=json_data['price']
     price_text = text if json_data['for-sale?'] else text.split()[0]
 
-    price_dict = {
-            'price' : float(re.sub('[^\d\.]', '', price_text)),
-            'price_currency' : text[0],
-            'rent_freq' : np.nan if json_data['for-sale?'] else text.split()[1]
-        }
+    try:
+        price_dict = {
+                'price' : float(re.sub('[^\d\.]', '', price_text)),
+                'price_currency' : text[0],
+                'rent_freq' : np.nan if json_data['for-sale?'] else text.split()[1]
+            }
+        
+    except ValueError:
+        price_dict = {
+                'price' : np.nan,
+                'price_currency' : np.nan,
+                'rent_freq' : np.nan
+            }
     
     return price_dict
