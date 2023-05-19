@@ -2,13 +2,12 @@ import asyncio
 import concurrent.futures
 
 import pandas as pd
-
 from onthemarket_scraper.main import scrape_from_otm
 from rightmove_scraper.main import scrape_from_rightmove
 from utils.add_utils import Logger, time_it
 from zoopla_scraper.main import scrape_from_zoopla
 
-logger = Logger('propertyScrapper_log', 'propertyScrapper.log').get_logger()
+logger = Logger('propertyScrapper_log', 'propertyScrapper.log', "LondonPropertyScrapper/").get_logger()
 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 
