@@ -23,7 +23,7 @@ log_dict = {
     }
 
 
-def get_data(for_sale: bool=True) -> list[dict[str, Union[str, int, float, datetime]]]:
+def get_data(driver_path, for_sale: bool=True) -> list[dict[str, Union[str, int, float, datetime]]]:
     """
     Scrapes Zoopla for property data and returns a list of dictionaries containing property information.
     :param for_sale: A boolean indicating whether to scrape properties for sale (True) or for rent (False).
@@ -43,7 +43,9 @@ def get_data(for_sale: bool=True) -> list[dict[str, Union[str, int, float, datet
         url=f"https://www.zoopla.co.uk/{task}/property/london/?q=London&search_source=home&chain_free"\
             f"=&added=24_hours&pn={page_num}"
 
-        driver=get_url(driver=initialize_driver(), long_url=url)
+        new_driver=initialize_driver(driver_path=driver_path)
+        
+        driver=get_url(driver=new_driver, long_url=url)
         
         # Display the total number of results on the first page of search results
         if page_num==1: show_results(driver=driver, task=task)

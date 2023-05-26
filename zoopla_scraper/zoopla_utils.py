@@ -8,7 +8,6 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.core.logger import __logger as wdm_logger
 
 wdm_logger.setLevel(logging.WARNING)
@@ -20,7 +19,7 @@ logging.getLogger('WDM').setLevel(logging.NOTSET)
 logging.getLogger('selenium').setLevel(logging.WARNING)
 
 
-def initialize_driver() -> webdriver.Chrome:
+def initialize_driver(driver_path) -> webdriver.Chrome:
     """
     Initializes a Chrome webdriver with specific options.
 
@@ -44,7 +43,7 @@ def initialize_driver() -> webdriver.Chrome:
     options.add_argument('--ignore-ssl-errors')  # Ignore SSL errors
 
     # Initialize Chrome webdriver with configured options
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    driver = webdriver.Chrome(service=Service(driver_path), options=options)
 
     return driver
 

@@ -2,8 +2,8 @@ import concurrent.futures
 import os
 
 import pandas as pd
-
 from utils.add_utils import Logger, time_it
+from webdriver_manager.chrome import ChromeDriverManager
 from zoopla_scraper.FetchData import get_data
 
 currentdir = os.path.dirname(os.path.realpath(__file__))
@@ -14,11 +14,12 @@ logger = Logger('zoopla_logger', 'main.log', currentdir).get_logger()
 def scrape_from_zoopla() -> list[dict]:
     
     logger.info(f"Started Scraping from Zoopla")
+    driver_path=ChromeDriverManager().install()
 
     # Use concurrent.futures to run both functions simultaneously
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        sales_task = executor.submit(get_data, True)
-        rent_task = executor.submit(get_data, False)
+        sales_task = executor.submit(get_data, driver_path, True)
+        rent_task = executor.submit(get_data, driver_path, False)
 
     # Get the property lists separately
     sales_property_list = sales_task.result()
