@@ -1,4 +1,4 @@
-aiohttp==3.8.4
+aiohttp==3.9.4
 beautifulsoup4==4.12.2
 numpy==1.24.3
 pandas==2.0.1
